@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="jar" name="JavaVtexPostmanGitlabCDCI:jar">
+  <artifact type="jar" build-on-make="true" name="JavaVtexPostmanGitlabCDCI:jar">
     <output-path>$PROJECT_DIR$/out/artifacts/JavaVtexPostmanGitlabCDCI_jar</output-path>
     <root id="archive" name="JavaVtexPostmanGitlabCDCI.jar">
       <element id="module-output" name="JavaVtexPostmanGitlabCDCI" />

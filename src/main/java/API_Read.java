@@ -10,27 +10,26 @@ public class API_Read {
 
     public static void main(String[] args)
     {
-        /*
-
         //COOKIE DE SESION VTEX
-        String galletaVTEX = "VtexRCMacIdv7=0d4abe40-a86b-11e9-8461-4be2b44df238; _ga=GA1.2.414783797.1564880657; _hjid=44928b47-fc91-426c-8270-e0511ba860e4; intercom-id-bs8us8hw=6a8abb2a-1daf-4b79-a435-7457a394f4e1; vtex_topbar_pic=0-0; _ga=GA1.3.414783797.1564880657; VtexFingerPrint=fd2a98dc4477751375799d4b43e9d0e4; janus_sid=5355bcb2-e59f-414f-b2cf-c24127ac240e; vtex_segment=eyJjYW1wYWlnbnMiOm51bGwsImNoYW5uZWwiOiIyIiwicHJpY2VUYWJsZXMiOm51bGwsInJlZ2lvbklkIjpudWxsLCJ1dG1fY2FtcGFpZ24iOm51bGwsInV0bV9zb3VyY2UiOm51bGwsInV0bWlfY2FtcGFpZ24iOm51bGwsImN1cnJlbmN5Q29kZSI6IlBFTiIsImN1cnJlbmN5U3ltYm9sIjoiUy8iLCJjb3VudHJ5Q29kZSI6IlBFUiIsImN1bHR1cmVJbmZvIjoiZXMtUEUiLCJhZG1pbl9jdWx0dXJlSW5mbyI6ImVuLVVTIn0; _gid=GA1.3.1006403163.1566529130; _gid=GA1.2.1006403163.1566529130; VtexIdclientAutCookie=eyJhbGciOiJFUzI1NiIsImtpZCI6IjcyMTE1REY3RTVFNDJEMjZGMDgzNTBBQjRCODI0NTNENEE2QURDNUMiLCJ0eXAiOiJqd3QifQ.eyJzdWIiOiJjYXJsb3MuY2hhbnRhQHByb21hcnQucGUiLCJhY2NvdW50IjoiX192dGV4X2FkbWluIiwic2NvcGUiOiJwcm9tYXJ0OmFkbWluIiwiYXV0aG9yaXphYmxlcyI6WyJ2cm46aWFtOl9fdnRleF9hZG1pbjp1c2Vycy9jYXJsb3MuY2hhbnRhQHByb21hcnQucGUiXSwiZXhwIjoxNTY2NzAzNzg3LCJ1c2VySWQiOiJjNjdkYjA3Yi0wZDgxLTQzYmMtOThlNy04ZTI1YzRkNmQ4MjMiLCJhdXRoX2x2bCI6InN0cm9uZyIsImlhdCI6MTU2NjYxNzM4NywiaXNzIjoidG9rZW4tZW1pdHRlciIsImp0aSI6IjRhODNmYjU2LTJmMTAtNGUxYy04MmEyLTNiNWEyZDkxZGM0NSJ9.zZgDO362131G1xbhz6vDMufN6bkkkIJ0Y5eDkNBAubvQXOOu2AVU5dR9VuicjDFeqqVTYcb7YT-7AhRI6J0qWQ; vtex_session=eyJhbGciOiJFUzI1NiIsImtpZCI6IkJGMjM5Q0E0REM1RURDQUFCNUQ4MTJEOThFODMzQjk0MURCM0JEQTgiLCJ0eXAiOiJqd3QifQ.eyJhY2NvdW50LmlkIjoiYmM2YTcxYTgtOTQ3Yy00ZmViLWEwMDctZTQzNmRkYjNjZjZlIiwiaWQiOiI1OTAwMDgyMy0xMzhmLTRiZGYtODJkNy1iNWY4NzY4MTYyODEiLCJ2ZXJzaW9uIjozLCJzdWIiOiJzZXNzaW9uIiwiYWNjb3VudCI6InNlc3Npb24iLCJleHAiOjE1NjczMDg2MjIsImlhdCI6MTU2NjYxNzQyMiwiaXNzIjoidG9rZW4tZW1pdHRlciIsImp0aSI6ImViNDkzODE5LWJiNjgtNDE5YS04ZGRjLWYzMTQ0NTg0NmY0MCJ9.fFthwTOyfRaEhwvk49HtHuxk_h4YSrYNVuj_XQsyuMaqgzO1sbotjZStScxrQgmdrdhNmT9LeaX9Ps8p8DCDYg; _hjIncludedInSample=1; VtexRCSessionIdv7=0%3A5421e7d0-c6b1-11e9-8458-d19c725b834d; VtexRCRequestCounter=2; intercom-session-bs8us8hw=b0FjbGR0ejFsWjZ0UjY1K1pNOXBKZlFRMjB3d25vMjBSK1dRSVZLQXY4a1JoUzd2b0xUUUZTMnF5VkVrYmoxKy0tbERxb0cyaHh1NXNqcGVTMDFHQnBuUT09--18d33fdbdb74ecc105866cd94da61b497e093347";
-        //CUENTA VTEX E INSTANCIA
-        String CuentaVTEX = "promart";      //PARA ENTORNO PRODUCTIVO: promart      PRUEBAS: qapromart
-        String InstanciaVTEX = "promart";   //PARA ENTORNO PRODUCTIVO: promart      PRUEBAS: promartext
+        String galletaVTEX = "VtexRCMacIdv7=0d4abe40-a86b-11e9-8461-4be2b44df238; _ga=GA1.2.414783797.1564880657; _hjid=44928b47-fc91-426c-8270-e0511ba860e4; intercom-id-bs8us8hw=6a8abb2a-1daf-4b79-a435-7457a394f4e1; VtexFingerPrint=fd2a98dc4477751375799d4b43e9d0e4; _gid=GA1.2.1006403163.1566529130; janus_sid=59341d4a-86cc-4ae6-b65f-d19d28519ac3; vtex_segment=eyJjYW1wYWlnbnMiOm51bGwsImNoYW5uZWwiOiIxIiwicHJpY2VUYWJsZXMiOm51bGwsInJlZ2lvbklkIjpudWxsLCJ1dG1fY2FtcGFpZ24iOm51bGwsInV0bV9zb3VyY2UiOm51bGwsInV0bWlfY2FtcGFpZ24iOm51bGwsImN1cnJlbmN5Q29kZSI6IlBFTiIsImN1cnJlbmN5U3ltYm9sIjoiUy8iLCJjb3VudHJ5Q29kZSI6IlBFUiIsImN1bHR1cmVJbmZvIjoiZXMtUEUiLCJhZG1pbl9jdWx0dXJlSW5mbyI6ImVuLVVTIn0; vtex_topbar_pic=0-0; _ga=GA1.3.414783797.1564880657; _gid=GA1.3.1006403163.1566529130; VtexRCSessionIdv7=0%3A1c24efe0-c773-11e9-95a8-5997f6880c05; _vss=26F37696CF32D328895A1BFBF3E6492BE1CA23F2EEC5C4D91B219F21E2BA2871; i18next=es-ES; VtexIdclientAutCookie=eyJhbGciOiJFUzI1NiIsImtpZCI6IkJEMjlCNTUxNTgwRDZGRjA2RjEyQkQxMjU0MEJDMTA1RTg5NThENUIiLCJ0eXAiOiJqd3QifQ.eyJzdWIiOiJjYXJsb3MuY2hhbnRhQHByb21hcnQucGUiLCJhY2NvdW50IjoiX192dGV4X2FkbWluIiwic2NvcGUiOiJxYXByb21hcnQ6YWRtaW4iLCJhdXRob3JpemFibGVzIjpbInZybjppYW06X192dGV4X2FkbWluOnVzZXJzL2Nhcmxvcy5jaGFudGFAcHJvbWFydC5wZSJdLCJleHAiOjE1NjY4NDk2ODcsInVzZXJJZCI6ImM2N2RiMDdiLTBkODEtNDNiYy05OGU3LThlMjVjNGQ2ZDgyMyIsImF1dGhfbHZsIjoic3Ryb25nIiwiaWF0IjoxNTY2NzYzMjg3LCJpc3MiOiJ0b2tlbi1lbWl0dGVyIiwianRpIjoiYjZiOTI1NzgtNDA0ZS00ODExLWEwNWEtOTU4ZWNhN2E3MGUzIn0.nc1w5qwoBiW2Up5tVq9VASTF_H4QwP-WUaTVBtbTzJ188pzRuyW6bdUu8_qZHl88a5mdBOj67aa3D1XKWIHA9g; vtex_session=eyJhbGciOiJFUzI1NiIsImtpZCI6IkUxMDMwOTQyMzY2QjIzMzZERUZBRDNENDE1QkRBQTEyNjU3MUI5MTgiLCJ0eXAiOiJqd3QifQ.eyJhY2NvdW50LmlkIjoiYjJmMmUwNGItZWUzYi00NWQ0LWEwYWItYTg1ZTUxNWFlZTc0IiwiaWQiOiI2N2E1ODIyYS1jOTJjLTQyMzktOTM5Mi02ZTg5NGEyY2YzMTQiLCJ2ZXJzaW9uIjozLCJzdWIiOiJzZXNzaW9uIiwiYWNjb3VudCI6InNlc3Npb24iLCJleHAiOjE1Njc0NTQ1MDksImlhdCI6MTU2Njc2MzMwOSwiaXNzIjoidG9rZW4tZW1pdHRlciIsImp0aSI6Ijk3NjE2ODc4LTg0MzctNGRmNy1iOTc2LTVkMDMzYWJkYzM3MyJ9.fplAEVKlyTbdNlvARWMqHPfXqrUqzvfBVQsdfiMpWZlt0t_2LQGvaNJ3VjbQkV6uk1HbCyXHb1eVRAQ6NNtsqg; _hjIncludedInSample=1; VtexRCRequestCounter=3; intercom-session-bs8us8hw=aFArdVBNMUlRSml3VVVOYjlXZzVaNytvQ1BiWUpWWi94OEVPRUJ0dm5VTXRNMU05ZWlrM05CUzhiUkQ4bDZQay0tZm5YeWhlT2Y4dGZib21MWWZaVGw5UT09--b05c75fdc1d085a117ebe1c95e981af631107698; _gat_UA-43760863-20=1";        //CUENTA VTEX E INSTANCIA
+        String CuentaVTEX = "qapromart";      //PARA ENTORNO PRODUCTIVO: promart      PRUEBAS: qapromart
+        String InstanciaVTEX = "promartext";   //PARA ENTORNO PRODUCTIVO: promart      PRUEBAS: promartext
         //VARIABLES GITLAB
-        String GitlabToken = "GVVGLD4z4w1vRJ24UYov"; //TOKEN GENERADO POR EL OWNER DEL PROYECTO
-        String IDProyecto = "12239356"; //OBTENIDO DE GITALB -> CONFIGURACION GENERAL O USANDO EL API
+        String GitlabToken = "x4httFHKLpu-cyRcK25L"; //TOKEN GENERADO POR EL OWNER DEL PROYECTO
+        String IDProyecto = "13975143";//DE PRODUCCION: 12239356 OBTENIDO DE GITALB -> CONFIGURACION GENERAL O USANDO EL API
         String RamaOrigen = "master"; //RAMA DE DONDE SE OBTENDRAN LOS ARCHIVOS A SUBIR A VTEX
 
-        */
+
+        /*
 
         String CuentaVTEX = args[0];
         String InstanciaVTEX = args[1];
         String GitlabToken = args[2];
         String IDProyecto = args[3];
         String RamaOrigen= args[4];
-        String galletaVTEX = args[5];
+        String galletaVTEX = args[5]
 
+        */
         String ListaVTEX = ListarArchivosVTEX(galletaVTEX,CuentaVTEX,InstanciaVTEX);
         String ListaRepo = ListarArchivosRepo(IDProyecto,GitlabToken);
         IntegracionREPOaVTEX(ListaVTEX,ListaRepo,galletaVTEX,RamaOrigen,IDProyecto,GitlabToken,CuentaVTEX,InstanciaVTEX);
@@ -103,7 +102,7 @@ public class API_Read {
         //CONVERTIR LOS "/" EN "%2F" PARA QUE SEA LEIBLE POR EL API DE GITLAB
         // ES DECIR, EL PATH source/js se convertira en source%2Fjs
         String finalPath = repopath.replace("/", "%2F");
-        String GetContentFileRepo = Unirest.get("https://gitlab.com/api/v4/projects/"+IDProyecto+"/repository/files/"+finalPath+file)
+        String GetContentFileRepo = Unirest.get("https://gitlab.com/api/v4/projects/"+IDProyecto+"/repository/files/"+finalPath)
                 .header("PRIVATE-TOKEN",GitlabToken)
                 .queryString("ref",branch)
                 .asString()
