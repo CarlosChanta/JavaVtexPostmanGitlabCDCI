@@ -5,30 +5,21 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.apache.commons.codec.binary.Base64;
 
+@SuppressWarnings("StringConcatenationInLoop")
 public class API_Read {
     public static void main(String[] args)
     {
-        //DATOS DE LOGIN VTEX
-        String bodyAuth="recaptcha=&login=carlos.chanta%40promart.pe&authenticationToken=939A78CF126C44E0A16A1E33E80914895506F1BE13C5F48D9C00953319A378C5&password=161815%40Yuki&fingerprint=246049c9a2110d5cbc69fe110af90bab&method=POST";
-        String CuentaVTEX = "qapromart";      //PARA ENTORNO PRODUCTIVO: promart      PRUEBAS: qapromart
-        String InstanciaVTEX = "promartext";   //PARA ENTORNO PRODUCTIVO: promart      PRUEBAS: promartext
-        //VARIABLES GITLAB
-        String GitlabToken = "x4httFHKLpu-cyRcK25L"; //TOKEN GENERADO POR EL OWNER DEL PROYECTO
-        String IDProyecto = "13975143";//DE PRODUCCION: 12239356 OBTENIDO DE GITALB -> CONFIGURACION GENERAL O USANDO EL API
-        String RamaOrigen = "master"; //RAMA DE DONDE SE OBTENDRAN LOS ARCHIVOS A SUBIR A VTEX
-
-        JSONObject VTEXCredentials =loginvtex(bodyAuth,CuentaVTEX);
-        String UserVTEX = VTEXCredentials.getString("ID");
-        String galletaVTEX = VTEXCredentials.getString("Cookie");
-
-        /*
         String CuentaVTEX = args[0];
         String InstanciaVTEX = args[1];
         String GitlabToken = args[2];
         String IDProyecto = args[3];
         String RamaOrigen= args[4];
-        String galletaVTEX = args[5]
-        */
+        String bodyAuth = args[5];
+
+        JSONObject VTEXCredentials =loginvtex(bodyAuth,CuentaVTEX);
+        String UserVTEX = VTEXCredentials.getString("ID");
+        String galletaVTEX = VTEXCredentials.getString("Cookie");
+
         String ListaVTEX = ListarArchivosVTEX(UserVTEX,galletaVTEX,CuentaVTEX,InstanciaVTEX);
         String ListaRepo = ListarArchivosRepo(IDProyecto,GitlabToken);
         IntegracionREPOaVTEX(ListaVTEX,ListaRepo,UserVTEX,galletaVTEX,RamaOrigen,IDProyecto,GitlabToken,CuentaVTEX,InstanciaVTEX);
@@ -63,12 +54,11 @@ public class API_Read {
 
     private static String ListarArchivosVTEX(String UserVTEX,String galletaVTEX, String CuentaVTEX, String InstanciaVTEX)
     {
-        String VTEXFiles = Unirest.get("https://"+CuentaVTEX+".myvtex.com/api/portal/pvt/sites/"+InstanciaVTEX+"/files")
+        return Unirest.get("https://"+CuentaVTEX+".myvtex.com/api/portal/pvt/sites/"+InstanciaVTEX+"/files")
                 .header("userId",UserVTEX)
                 .header("VtexIdclientAutCookie",galletaVTEX)
                 .asString()
                 .getBody();
-        return VTEXFiles;
     }
 
     private static String getListRepoPaths(String path, String IDProyecto, String GitlabToken)
@@ -109,8 +99,7 @@ public class API_Read {
         JSONObject Jfile = new JSONObject(GetContentFileRepo);
         String text = Jfile.getString("content");
         byte[] valueDecoded = Base64.decodeBase64(text);
-        String jsonLoadVtex = "{\"path\":\""+file+"\",\"text\":\""+new String(valueDecoded)+"\"}";
-        return  jsonLoadVtex; //SE RETORNA EL JSON QUE SE USARA PARA EL API QUE HACE LA SUBIDA A VTEX
+        return "{\"path\":\""+file+"\",\"text\":\""+new String(valueDecoded)+"\"}"; //SE RETORNA EL JSON QUE SE USARA PARA EL API QUE HACE LA SUBIDA A VTEX
     }
 
     private static void ComparaySubeaVTEX(String UserVTEX,String galletaVTEX, JSONArray VTEXFiles, String fileRepo, String filePath,
@@ -147,7 +136,6 @@ public class API_Read {
                 .getBody();
         JSONObject resp = new JSONObject(ResponseLogin);
         JSONObject auth = resp.getJSONObject("authCookie");
-        JSONObject VTEXCredentials = new JSONObject("{\"ID\":\""+resp.getString("userId")+"\",\"Cookie\":\""+auth.getString("Value")+"\"}");
-        return VTEXCredentials;
+        return new JSONObject("{\"ID\":\""+resp.getString("userId")+"\",\"Cookie\":\""+auth.getString("Value")+"\"}");
     }
 }
