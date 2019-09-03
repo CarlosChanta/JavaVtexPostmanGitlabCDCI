@@ -5,20 +5,38 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.apache.commons.codec.binary.Base64;
 
-@SuppressWarnings("StringConcatenationInLoop")
+@SuppressWarnings("ALL")
 public class API_Read {
     public static void main(String[] args)
     {
+        /*
         String CuentaVTEX = args[0];
         String InstanciaVTEX = args[1];
         String GitlabToken = args[2];
         String IDProyecto = args[3];
         String RamaOrigen= args[4];
         String bodyAuth = args[5];
+        */
+        String CuentaVTEX = "qapromart";
+        String InstanciaVTEX ="promartext";
+        String GitlabToken = "x4httFHKLpu-cyRcK25L" ;
+        String IDProyecto = "13975143";
+        String RamaOrigen= "master";
+        String bodyAuth = "recaptcha=&login=carlos.chanta%40promart.pe&authenticationToken=9C315D7969D3086ADB06E60156D3AFE264EDCD3D223652E0DA5088831968980A&password=161815%40Yuki&fingerprint=9ab5cb2503a6a27141adc390a466d22b&method=POST";
+
+        System.out.println("------INICIANDO PROCESO DE HOMOLOGACION------");
+        System.out.println("CUENTA VTEX OBJETIVO: "+CuentaVTEX);
+        System.out.println("INSTANCIA OBJETIVO: "+InstanciaVTEX);
+        System.out.println("ID DEL PROYECTO GITLAB OBJETIVO: "+IDProyecto);
+        System.out.println("RAMA ORIGEN: "+RamaOrigen);
+        System.out.println("---------------------------------------------");
+        System.out.println(bodyAuth);
 
         JSONObject VTEXCredentials =loginvtex(bodyAuth,CuentaVTEX);
         String UserVTEX = VTEXCredentials.getString("ID");
         String galletaVTEX = VTEXCredentials.getString("Cookie");
+
+        System.out.println("Cookie Obtenida!: "+galletaVTEX);
 
         String ListaVTEX = ListarArchivosVTEX(UserVTEX,galletaVTEX,CuentaVTEX,InstanciaVTEX);
         String ListaRepo = ListarArchivosRepo(IDProyecto,GitlabToken);
@@ -28,10 +46,6 @@ public class API_Read {
     private static void IntegracionREPOaVTEX(String ListaVTEX, String ListaRepo, String UserVTEX,String galletaVTEX,
                                              String RamaOrigen, String IDProyecto, String GitlabToken, String CuentaVTEX, String InstanciaVTEX)
     {
-        //FUNCION QUE SUBE ARCHIVOS DE REPO A VTEX
-        //SI EL ARCHIVO ESTA EN EL REPO Y EN VTEX, SE OBTIENE SU CONTENIDO Y SE ACTUALIZA
-        //SI EL ARCHIVO ESTA EN EL REPO, PERO NO EN VTEX, SE CREA EL ARCHIVO EN EL OMS DE VTEX EN CHECKOUT/CODIGO
-
         JSONArray VTEXFiles = new JSONArray(ListaVTEX);
         JSONArray RepoFiles = new JSONArray(ListaRepo);
         for (int i = 0; i <RepoFiles.length() ; i++) {
@@ -99,7 +113,13 @@ public class API_Read {
         JSONObject Jfile = new JSONObject(GetContentFileRepo);
         String text = Jfile.getString("content");
         byte[] valueDecoded = Base64.decodeBase64(text);
-        return "{\"path\":\""+file+"\",\"text\":\""+new String(valueDecoded)+"\"}"; //SE RETORNA EL JSON QUE SE USARA PARA EL API QUE HACE LA SUBIDA A VTEX
+        //SE REEMPLAZAN LOS SALTOS DE LINEA,TABULACIONES Y COMILLAS POR \n,\t Y \" PARA QUE SEA LEIBLE POR VTEX
+        String content = new String(valueDecoded);
+        String textNoNextLine = content.replaceAll("[\\\n]","\\\\n");
+        String textNoTabs = textNoNextLine.replaceAll("[\\\t]","\\\\t");
+        String textFinal = textNoTabs.replaceAll("\"","\\\\\"");
+
+        return "{\"path\":\""+file+"\",\"text\":\""+textFinal+"\"}"; //SE RETORNA EL JSON QUE SE USARA PARA EL API QUE HACE LA SUBIDA A VTEX
     }
 
     private static void ComparaySubeaVTEX(String UserVTEX,String galletaVTEX, JSONArray VTEXFiles, String fileRepo, String filePath,
@@ -108,8 +128,8 @@ public class API_Read {
         for (int k = 0; k < VTEXFiles.length(); k++) {
             String fileVTEX = VTEXFiles.getString(k);
             if (fileRepo.equals(fileVTEX)){
-                System.out.println(fileRepo+"="+fileVTEX+"    ARCHIVO DE REPO ENCONTRADO!!!!");
-                System.out.println("SUBIENDO A VTEX...");
+                System.out.println("ARCHIVO "+fileRepo+" DE REPOSITORIO, ENCONTRADO EN VTEX PORTAL!");
+                System.out.println("ACTUALIZANDO...");
                 HttpResponse<JsonNode> response = Unirest.put("https://"+CuentaVTEX+".myvtex.com/api/portal/pvt/sites/"+InstanciaVTEX+"/files/" + fileRepo)
                         .header("userId",UserVTEX)
                         .header("VtexIdclientAutCookie", galletaVTEX)
@@ -117,11 +137,29 @@ public class API_Read {
                         .body(getContentFileRepo(fileRepo,filePath,RamaOrigen,IDProyecto,GitlabToken))
                         .asJson();
                 if (response.isSuccess()){
-                    System.out.println("ARCHIVO SUBIDO CON EXITO");
+                    System.out.println("ARCHIVO ACUALIZADO CON EXITO");
                     break;
                 }else{
-                    System.out.println("FALLO LA SUBIDA DE ARCHIVO, ERROR: "+response.getStatusText());
+                    System.out.println("FALLO AL ACTUALIZAR ARCHIVO!, ERROR: "+response.getStatus()+" - "+response.getStatusText());
                     break;
+                }
+            }else{
+                if (k==VTEXFiles.length()-1){
+                    System.out.println("ARCHIVO "+fileRepo+" DE REPOSITORIO, NO ENCONTRADO EN VTEX PORTAL");
+                    System.out.println("CREANDO!!!!...");
+                    HttpResponse<JsonNode> response = Unirest.put("https://"+CuentaVTEX+".myvtex.com/api/portal/pvt/sites/"+InstanciaVTEX+"/files/" + fileRepo)
+                            .header("userId",UserVTEX)
+                            .header("VtexIdclientAutCookie", galletaVTEX)
+                            .header("Content-Type", "application/json")
+                            .body(getContentFileRepo(fileRepo,filePath,RamaOrigen,IDProyecto,GitlabToken))
+                            .asJson();
+                    if (response.isSuccess()){
+                        System.out.println("ARCHIVO CREADO CON EXITO");
+                        break;
+                    }else{
+                        System.out.println("FALLO AL CREAR ARCHIVO!, ERROR: "+response.getStatus()+" - "+response.getStatusText());
+                        break;
+                    }
                 }
             }
         }
